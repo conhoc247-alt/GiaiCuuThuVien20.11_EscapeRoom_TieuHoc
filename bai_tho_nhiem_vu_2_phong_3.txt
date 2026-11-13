@@ -1,0 +1,46 @@
+{
+  "title": "NGÀY ĐẦU ĐẾN LỚP",
+  "author": "Nguyễn Đặng Viên Phương",
+  "stanzas": [
+    {
+      "lines": [
+        "Ngày đầu tiên đi học",
+        "Mẹ dắt tay đến trường",
+        "Em vừa đi vừa khóc",
+        "Mẹ dỗ dành yêu thương."
+      ]
+    },
+    {
+      "lines": [
+        "Cô giáo đón từ xa",
+        "Em mắt ướt nhạt nhoà",
+        "Cô vỗ về an ủi",
+        "Chao ôi là thiết tha."
+      ]
+    },
+    {
+      "lines": [
+        "Cô dắt tay vào lớp",
+        "Dỗ dành kể chuyện vui",
+        "Cô nhìn đôi mắt ướt",
+        "Bảo thầm nín đi thôi"
+      ]
+    },
+    {
+      "lines": [
+        "Ngày đầu như thế đó",
+        "Cô giáo như mẹ hiền",
+        "Em bấy giờ cứ ngỡ",
+        "Cô giáo là cô tiên"
+      ]
+    },
+    {
+      "lines": [
+        "Bây giờ em đã lớn",
+        "Vẫn nhớ về ngày xưa",
+        "Ngày đầu tiên đi học",
+        "Mẹ cô cùng đón đưa."
+      ]
+    }
+  ]
+}

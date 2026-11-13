@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450" width="100%" height="100%">
+  <defs>
+    <!-- Bộ lọc phát sáng ma thuật -->
+    <filter id="magic-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Gradient cho không gian ma thuật bên trong cổng -->
+    <radialGradient id="portal-bg" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#fff9ae" />
+      <stop offset="35%" stop-color="#ff7eb3" />
+      <stop offset="70%" stop-color="#7afcff" />
+      <stop offset="100%" stop-color="#5b247a" />
+    </radialGradient>
+
+    <!-- Gradient cho vòm đá cổ tích -->
+    <linearGradient id="arch-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a18cd1" />
+      <stop offset="50%" stop-color="#7b5fac" />
+      <stop offset="100%" stop-color="#543884" />
+    </linearGradient>
+
+    <!-- Gradient cho cánh cửa gỗ phép thuật -->
+    <linearGradient id="door-wood" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9a44" />
+      <stop offset="100%" stop-color="#fc6076" />
+    </linearGradient>
+
+    <!-- Gradient vàng kim loại -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe259" />
+      <stop offset="100%" stop-color="#ffa751" />
+    </linearGradient>
+
+    <!-- Gradient ngọc bích phát sáng -->
+    <radialGradient id="gem-cyan" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </radialGradient>
+
+    <!-- Khung cắt bên trong lòng cổng -->
+    <clipPath id="inner-arch-clip">
+      <path d="M 110,360 L 110,200 A 90,90 0 0,1 290,200 L 290,360 Z" />
+    </clipPath>
+
+    <!-- Mẫu ngôi sao nhỏ dùng lại -->
+    <g id="sparkle">
+      <path d="M 0,-10 Q 0,0 10,0 Q 0,0 0,10 Q 0,0 -10,0 Q 0,0 0,-10 Z" fill="#fff9ae" />
+      <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+    </g>
+  </defs>
+
+  <style>
+    /* Hiệu ứng mở - đóng cánh cửa trái */
+    .door-left {
+      transform-origin: 110px 240px;
+      animation: swingLeft 5s ease-in-out infinite;
+    }
+    /* Hiệu ứng mở - đóng cánh cửa phải */
+    .door-right {
+      transform-origin: 290px 240px;
+      animation: swingRight 5s ease-in-out infinite;
+    }
+    /* Hiệu ứng xoáy ma thuật bên trong */
+    .vortex {
+      transform-origin: 200px 235px;
+      animation: spinVortex 8s linear infinite;
+    }
+    /* Hiệu ứng ánh sáng bừng lên khi cửa mở */
+    .portal-light {
+      animation: pulseLight 5s ease-in-out infinite;
+    }
+    /* Hiệu ứng sao bay lấp lánh */
+    .floating-star-1 { animation: floatUp 5s ease-in-out infinite; }
+    .floating-star-2 { animation: floatUp 5s ease-in-out 0.4s infinite; }
+    .floating-star-3 { animation: floatUp 5s ease-in-out 0.8s infinite; }
+    .crown-gem { animation: glowPulse 2.5s ease-in-out infinite alternate; }
+
+    @keyframes swingLeft {
+      0%, 15% { transform: scaleX(1) skewY(0deg); }
+      40%, 65% { transform: scaleX(0.16) skewY(-8deg); }
+      90%, 100% { transform: scaleX(1) skewY(0deg); }
+    }
+
+    @keyframes swingRight {
+      0%, 15% { transform: scaleX(1) skewY(0deg); }
+      40%, 65% { transform: scaleX(0.16) skewY(8deg); }
+      90%, 100% { transform: scaleX(1) skewY(0deg); }
+    }
+
+    @keyframes spinVortex {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.12); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes pulseLight {
+      0%, 15% { opacity: 0.5; }
+      45%, 60% { opacity: 1; }
+      90%, 100% { opacity: 0.5; }
+    }
+
+    @keyframes floatUp {
+      0%, 20% { transform: translateY(25px) scale(0); opacity: 0; }
+      45%, 60% { transform: translateY(-15px) scale(1.1); opacity: 1; }
+      80%, 100% { transform: translateY(-45px) scale(0); opacity: 0; }
+    }
+
+    @keyframes glowPulse {
+      0% { filter: drop-shadow(0 0 3px #00f2fe); }
+      100% { filter: drop-shadow(0 0 12px #00f2fe); }
+    }
+  </style>
+
+  <!-- 1. Hào quang lấp lánh phía ngoài vòm cổng -->
+  <use href="#sparkle" x="55" y="150" transform="scale(0.8)" class="crown-gem" />
+  <use href="#sparkle" x="345" y="140" transform="scale(0.9)" class="crown-gem" />
+  <use href="#sparkle" x="70" y="75" transform="scale(0.6)" />
+  <use href="#sparkle" x="330" y="70" transform="scale(0.7)" />
+
+  <!-- 2. Không gian phép thuật bên trong (hiện ra khi cửa mở) -->
+  <g clip-path="url(#inner-arch-clip)">
+    <!-- Nền vũ trụ cổ tích -->
+    <rect x="105" y="105" width="190" height="260" fill="url(#portal-bg)" class="portal-light" />
+
+    <!-- Vòng xoáy ánh sáng -->
+    <g class="vortex" opacity="0.65">
+      <circle cx="200" cy="235" r="85" fill="none" stroke="#ffffff" stroke-width="6" stroke-dasharray="25 18" />
+      <circle cx="200" cy="235" r="60" fill="none" stroke="#fff9ae" stroke-width="5" stroke-dasharray="18 14" />
+      <circle cx="200" cy="235" r="35" fill="none" stroke="#7afcff" stroke-width="4" stroke-dasharray="12 10" />
+      <circle cx="200" cy="235" r="14" fill="#ffffff" filter="url(#magic-glow)" />
+    </g>
+
+    <!-- Các ngôi sao bay lên khi cửa mở -->
+    <g class="floating-star-1">
+      <use href="#sparkle" x="165" y="250" transform="scale(1.1)" />
+      <circle cx="220" cy="280" r="4" fill="#fff9ae" />
+    </g>
+    <g class="floating-star-2">
+      <use href="#sparkle" x="230" y="210" transform="scale(0.9)" />
+      <circle cx="175" cy="190" r="3.5" fill="#ffffff" />
+    </g>
+    <g class="floating-star-3">
+      <use href="#sparkle" x="195" y="165" transform="scale(1.3)" />
+      <circle cx="205" cy="240" r="5" fill="#7afcff" />
+    </g>
+
+    <!-- ————— 3. HAI CÁNH CỬA MA THUẬT ————— -->
+    <!-- Cánh cửa bên trái -->
+    <g class="door-left">
+      <path d="M 110,360 L 110,200 A 90,90 0 0,1 200,110 L 200,360 Z" fill="url(#door-wood)" stroke="url(#gold-grad)" stroke-width="5" />
+      <!-- Ô trang trí trên cánh trái -->
+      <path d="M 124,342 L 124,205 A 74,74 0 0,1 186,132 L 186,342 Z" fill="none" stroke="#ffe259" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.85" />
+      <!-- Biểu tượng mặt trăng khuyết dễ thương -->
+      <path d="M 165,205 A 18,18 0 1,0 165,240 A 13,13 0 1,1 165,205 Z" fill="url(#gold-grad)" />
+      <!-- Bản lề vàng bên trái -->
+      <rect x="110" y="195" width="16" height="8" rx="4" fill="url(#gold-grad)" />
+      <rect x="110" y="305" width="16" height="8" rx="4" fill="url(#gold-grad)" />
+      <!-- Tay nắm cửa ngọc sáng trái -->
+      <circle cx="184" cy="255" r="8" fill="url(#gold-grad)" />
+      <circle cx="184" cy="255" r="4.5" fill="url(#gem-cyan)" />
+    </g>
+
+    <!-- Cánh cửa bên phải -->
+    <g class="door-right">
+      <path d="M 200,110 A 90,90 0 0,1 290,200 L 290,360 L 200,360 Z" fill="url(#door-wood)" stroke="url(#gold-grad)" stroke-width="5" />
+      <!-- Ô trang trí trên cánh phải -->
+      <path d="M 214,132 A 74,74 0 0,1 276,205 L 276,342 L 214,342 Z" fill="none" stroke="#ffe259" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.85" />
+      <!-- Biểu tượng ngôi sao bốn cánh bên phải -->
+      <path d="M 245,204 Q 245,222 263,222 Q 245,222 245,240 Q 245,222 227,222 Q 245,222 245,204 Z" fill="url(#gold-grad)" />
+      <!-- Bản lề vàng bên phải -->
+      <rect x="274" y="195" width="16" height="8" rx="4" fill="url(#gold-grad)" />
+      <rect x="274" y="305" width="16" height="8" rx="4" fill="url(#gold-grad)" />
+      <!-- Tay nắm cửa ngọc sáng phải -->
+      <circle cx="216" cy="255" r="8" fill="url(#gold-grad)" />
+      <circle cx="216" cy="255" r="4.5" fill="url(#gem-cyan)" />
+    </g>
+  </g>
+
+  <!-- 4. Khung vòm đá cổ tích bao quanh -->
+  <path d="M 74,360 L 74,200 A 126,126 0 0,1 326,200 L 326,360 L 290,360 L 290,200 A 90,90 0 0,0 110,200 L 110,360 Z" fill="url(#arch-grad)" stroke="url(#gold-grad)" stroke-width="5" stroke-linejoin="round" />
+
+  <!-- Họa tiết vạch đá & ngọc nhỏ gắn trên vòm -->
+  <circle cx="92" cy="260" r="6" fill="url(#gem-cyan)" stroke="url(#gold-grad)" stroke-width="2" />
+  <circle cx="308" cy="260" r="6" fill="url(#gem-cyan)" stroke="url(#gold-grad)" stroke-width="2" />
+  <circle cx="115" cy="145" r="6" fill="url(#gem-cyan)" stroke="url(#gold-grad)" stroke-width="2" />
+  <circle cx="285" cy="145" r="6" fill="url(#gem-cyan)" stroke="url(#gold-grad)" stroke-width="2" />
+
+  <!-- 5. Vương miện ngôi sao & Viên ngọc chủ đạo trên đỉnh cổng -->
+  <g class="crown-gem">
+    <polygon points="200,52 212,76 238,80 219,98 224,124 200,111 176,124 181,98 162,80 188,76" fill="url(#gold-grad)" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
+    <circle cx="200" cy="90" r="12" fill="url(#gem-cyan)" />
+  </g>
+
+  <!-- 6. Bậc thềm đá cổ tích phía dưới -->
+  <rect x="60" y="360" width="280" height="22" rx="11" fill="url(#arch-grad)" stroke="url(#gold-grad)" stroke-width="4" />
+  <rect x="40" y="382" width="320" height="24" rx="12" fill="url(#arch-grad)" stroke="url(#gold-grad)" stroke-width="4" />
+  
+  <!-- Chấm cỏ/hoa nhỏ trang trí bậc thềm -->
+  <circle cx="75" cy="394" r="4" fill="#ffe259" />
+  <circle cx="325" cy="394" r="4" fill="#ffe259" />
+</svg>

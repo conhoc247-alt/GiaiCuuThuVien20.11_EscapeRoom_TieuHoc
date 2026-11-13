@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiệu ứng Cổng Ma Thuật - Phòng Lịch Sử</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Cinzel', 'Segoe UI', serif; /* Font có chân tạo cảm giác cổ kính, ma thuật */
+            overflow: hidden;
+            background-color: #040a12; 
+        }
+
+        /* Container của toàn bộ hiệu ứng cổng */
+        #gate-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: all;
+            perspective: 1000px;
+        }
+
+        /* Hai cánh cửa ma thuật */
+        .door {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a364b 0%, #040914 100%);
+            transition: transform 1.8s cubic-bezier(0.64, 0.05, 0.35, 1.05); /* Hiệu ứng mở mượt mà và hơi giật lại */
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Tạo hiệu ứng vân ma thuật mờ ảo trên cửa */
+        .door::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 100% 50%, transparent 20%, rgba(255, 215, 0, 0.05) 50%, transparent 80%);
+            pointer-events: none;
+        }
+
+        .door-left {
+            left: 0;
+            border-right: 3px solid rgba(255, 215, 0, 0.9);
+            box-shadow: inset -30px 0 80px -20px rgba(255, 215, 0, 0.6), 
+                        10px 0 50px rgba(255, 215, 0, 0.4); /* Hào quang tràn ra ngoài */
+            transform-origin: left;
+        }
+
+        .door-right {
+            right: 0;
+            border-left: 3px solid rgba(255, 215, 0, 0.9);
+            box-shadow: inset 30px 0 80px -20px rgba(255, 215, 0, 0.6), 
+                        -10px 0 50px rgba(255, 215, 0, 0.4);
+            transform-origin: right;
+        }
+
+        /* Khu vực trung tâm chứa ấn chú */
+        .center-console {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            transition: all 0.8s ease;
+        }
+
+        /* Vòng tròn ấn chú (Magic Seal) */
+        .magic-seal {
+            width: 150px;
+            height: 150px;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+            animation: spin-slow 10s linear infinite, float-up-down 4s ease-in-out infinite alternate;
+        }
+
+        .magic-seal svg {
+            width: 100%;
+            height: 100%;
+            animation: pulse-seal 2s ease-in-out infinite alternate;
+        }
+
+        /* Thanh thông báo loading kiểu bùa chú/lơ lửng */
+        .loading-badge {
+            background: linear-gradient(90deg, transparent, rgba(11, 25, 44, 0.8), transparent);
+            border-top: 1px solid rgba(255, 215, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.5);
+            padding: 10px 40px;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            animation: float-up-down 4s ease-in-out infinite alternate-reverse; /* Bay ngược nhịp với seal */
+        }
+
+        .dots::after {
+            content: '';
+            animation: typing-dots 2s infinite steps(4, end);
+        }
+
+        /* Animations */
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float-up-down {
+            0% { transform: translateY(-5px); }
+            100% { transform: translateY(5px); }
+        }
+
+        @keyframes pulse-seal {
+            0% { opacity: 0.7; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes typing-dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        /* Trạng thái BÙNG NỔ (Giải ấn) trước khi mở */
+        .gate-container.unlocking .magic-seal {
+            animation: none;
+            transform: scale(2) rotate(180deg);
+            opacity: 0;
+            filter: drop-shadow(0 0 50px rgba(255, 255, 255, 1));
+            transition: all 0.6s ease-in;
+        }
+        .gate-container.unlocking .loading-badge {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        /* Trạng thái MỞ CỬA */
+        .gate-container.open .door-left {
+            transform: translateX(-100%);
+            box-shadow: inset -5px 0 20px rgba(255, 215, 0, 0);
+        }
+
+        .gate-container.open .door-right {
+            transform: translateX(100%);
+            box-shadow: inset 5px 0 20px rgba(255, 215, 0, 0);
+        }
+
+        /* Nội dung căn phòng */
+        #room-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 2rem;
+            color: #fff;
+            background: #0f172a; /* Màu phòng nhẹ nhàng hơn để làm nổi bật cổng */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Giao diện Cổng Ma Thuật -->
+    <div id="gate-container" class="gate-container">
+        <div class="door door-left"></div>
+        <div class="door door-right"></div>
+        
+        <div class="center-console">
+            <!-- Vòng tròn ma thuật (Magic Seal SVG) -->
+            <div class="magic-seal" id="magic-seal">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Vòng tròn ngoài cùng -->
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="5 5"/>
+                    <circle cx="50" cy="50" r="43" fill="none" stroke="#ffd700" stroke-width="1"/>
+                    
+                    <!-- Ngôi sao 6 cánh (Hexagram) -->
+                    <polygon points="50,10 85,70 15,70" fill="none" stroke="#ffd700" stroke-width="1.5"/>
+                    <polygon points="50,90 15,30 85,30" fill="none" stroke="#ffd700" stroke-width="1.5"/>
+                    
+                    <!-- Vòng tròn trong -->
+                    <circle cx="50" cy="50" r="23" fill="none" stroke="#ffd700" stroke-width="2"/>
+                    
+                    <!-- Lõi năng lượng -->
+                    <circle cx="50" cy="50" r="8" fill="#ffd700"/>
+                    
+                    <!-- Các ký tự cổ (Trang trí bằng các hình khối nhỏ) -->
+                    <circle cx="50" cy="18" r="2" fill="#ffd700"/>
+                    <circle cx="50" cy="82" r="2" fill="#ffd700"/>
+                    <circle cx="23" cy="50" r="2" fill="#ffd700"/>
+                    <circle cx="77" cy="50" r="2" fill="#ffd700"/>
+                </svg>
+            </div>
+            
+            <!-- Thanh trạng thái -->
+            <div class="loading-badge">
+                <span>ĐANG GIẢI MÃ ẤN CHÚ: PHÒNG LỊCH SỬ<span class="dots"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nội dung căn phòng -->
+    <div id="room-content">
+        <h1>✨ Chào mừng đến với không gian Lịch Sử ✨</h1>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const gateContainer = document.getElementById('gate-container');
+
+            // Giả lập thời gian loading (ví dụ: 3 giây)
+            setTimeout(() => {
+                
+                // Bước 1: Thêm class 'unlocking' để tạo hiệu ứng bùng sáng vòng tròn ma thuật (Giải ấn)
+                gateContainer.classList.add('unlocking');
+
+                // Bước 2: Đợi vòng tròn bùng sáng xong (0.6s) thì mới kéo 2 cánh cửa ra
+                setTimeout(() => {
+                    gateContainer.classList.remove('unlocking'); // Tắt hiển thị ấn chú
+                    gateContainer.classList.add('open');         // Trượt cửa
+                    
+                    // Xóa DOM sau khi cửa mở xong để không cản trở tương tác trong phòng (1.8s là thời gian trượt)
+                    setTimeout(() => {
+                        gateContainer.style.display = 'none';
+                    }, 1800); 
+
+                }, 600); // 600ms = 0.6 giây giải ấn
+
+            }, 3000); // 3000ms = 3 giây loading
+        });
+    </script>
+
+</body>
+</html>

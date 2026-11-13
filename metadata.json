@@ -1,0 +1,6 @@
+{
+  "name": "GIẢI CỨU THƯ VIỆN 20/11 – ESCAPE ROOM",
+  "description": "Trò chơi phiêu lưu giải đố escape room kỷ niệm Ngày Nhà giáo Việt Nam 20/11",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

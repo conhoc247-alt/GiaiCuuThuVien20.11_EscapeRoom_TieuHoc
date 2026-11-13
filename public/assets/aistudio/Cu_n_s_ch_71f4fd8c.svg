@@ -1,0 +1,408 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 25 1164 715" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="max-width: 100vw; max-height: 100vh; display: block; margin: auto; background: transparent; user-select: none; -webkit-user-select: none;">
+  <defs>
+    <!-- Bóng đổ tổng thể của cuốn sách -->
+    <filter id="book-drop-shadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#000000" flood-opacity="0.42" />
+    </filter>
+
+    <!-- Bóng đổ mềm cho trang đang lật -->
+    <filter id="flip-shadow-blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" />
+    </filter>
+
+    <!-- Gradient Bìa Xanh Hoàng Gia -->
+    <linearGradient id="blue-cover-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d439b" />
+      <stop offset="25%" stop-color="#10296b" />
+      <stop offset="50%" stop-color="#091845" />
+      <stop offset="75%" stop-color="#10296b" />
+      <stop offset="100%" stop-color="#071336" />
+    </linearGradient>
+
+    <linearGradient id="blue-edge-highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3c6be0" />
+      <stop offset="50%" stop-color="#15327a" />
+      <stop offset="100%" stop-color="#06102e" />
+    </linearGradient>
+
+    <!-- Gradient Lớp Lót Đỏ -->
+    <linearGradient id="red-lining-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#801111" />
+      <stop offset="20%" stop-color="#c42121" />
+      <stop offset="50%" stop-color="#5e0b0b" />
+      <stop offset="80%" stop-color="#c42121" />
+      <stop offset="100%" stop-color="#801111" />
+    </linearGradient>
+
+    <!-- Gradient Vàng Kim Loại Chạm Nổi -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff6b3" />
+      <stop offset="22%" stop-color="#ffd24c" />
+      <stop offset="50%" stop-color="#e09612" />
+      <stop offset="78%" stop-color="#ffcf40" />
+      <stop offset="100%" stop-color="#8c5100" />
+    </linearGradient>
+
+    <linearGradient id="gold-rim-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe885" />
+      <stop offset="50%" stop-color="#d48806" />
+      <stop offset="100%" stop-color="#784300" />
+    </linearGradient>
+
+    <!-- Gradient Khối Giấy Dày Hai Bên và Đáy -->
+    <linearGradient id="page-block-left" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c49a68" />
+      <stop offset="35%" stop-color="#e3c193" />
+      <stop offset="70%" stop-color="#cfa674" />
+      <stop offset="100%" stop-color="#f2dbb8" />
+    </linearGradient>
+
+    <linearGradient id="page-block-right" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f2dbb8" />
+      <stop offset="30%" stop-color="#cfa674" />
+      <stop offset="65%" stop-color="#e3c193" />
+      <stop offset="100%" stop-color="#c49a68" />
+    </linearGradient>
+
+    <linearGradient id="page-block-bottom" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ecd2ad" />
+      <stop offset="45%" stop-color="#d4af7d" />
+      <stop offset="85%" stop-color="#b58952" />
+      <stop offset="100%" stop-color="#8c6230" />
+    </linearGradient>
+
+    <!-- Gradient Mặt Trang Sách Trái -->
+    <linearGradient id="left-page-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#edd3ad" />
+      <stop offset="18%" stop-color="#f8e8cc" />
+      <stop offset="65%" stop-color="#fdf4e3" />
+      <stop offset="88%" stop-color="#efd7b4" />
+      <stop offset="96%" stop-color="#d4b083" />
+      <stop offset="100%" stop-color="#b08858" />
+    </linearGradient>
+
+    <!-- Gradient Mặt Trang Sách Phải -->
+    <linearGradient id="right-page-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a88050" />
+      <stop offset="4%" stop-color="#d1ad80" />
+      <stop offset="12%" stop-color="#efd7b4" />
+      <stop offset="35%" stop-color="#fdf4e3" />
+      <stop offset="82%" stop-color="#f8e8cc" />
+      <stop offset="100%" stop-color="#edd3ad" />
+    </linearGradient>
+
+    <!-- Gradient Trang Đang Lật -->
+    <linearGradient id="flip-page-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d8b588" />
+      <stop offset="20%" stop-color="#faf0dc" />
+      <stop offset="55%" stop-color="#fff9ee" />
+      <stop offset="85%" stop-color="#f2dec0" />
+      <stop offset="100%" stop-color="#c9a16f" />
+    </linearGradient>
+
+    <!-- Gradient Mặt Sau Uốn Cong Của Trang Lật -->
+    <linearGradient id="flip-back-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c49c6b" />
+      <stop offset="40%" stop-color="#f7e7cb" />
+      <stop offset="75%" stop-color="#fff8eb" />
+      <stop offset="100%" stop-color="#d1ab7a" />
+    </linearGradient>
+
+    <!-- Gradient Dây Ruy Băng Đỏ -->
+    <linearGradient id="ribbon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b3b" />
+      <stop offset="45%" stop-color="#d61515" />
+      <stop offset="100%" stop-color="#7a0606" />
+    </linearGradient>
+
+    <!-- Hoa văn góc trang giấy nhỏ -->
+    <g id="corner-flourish">
+      <path d="M 0,0 C 18,2 32,2 44,8 C 34,12 22,12 12,10 C 16,20 26,26 36,28 C 24,30 14,24 8,14 C 10,24 10,36 6,46 C 2,34 2,18 0,0 Z" fill="url(#gold-grad)" opacity="0.85" />
+      <circle cx="16" cy="16" r="2.5" fill="#c9830c" />
+    </g>
+  </defs>
+
+  <!-- TẦNG 1: BÌA SÁCH VÀ GÁY SÁCH -->
+  <g id="book-cover-layer" filter="url(#book-drop-shadow)">
+    <path d="M 55,140 Q 62,115 90,115 L 560,132 Q 600,145 640,132 L 1110,115 Q 1138,115 1145,140 L 1168,625 Q 1172,658 1138,662 L 652,668 Q 600,692 548,668 L 62,662 Q 28,658 32,625 Z" fill="url(#blue-cover-grad)" stroke="#050d26" stroke-width="3" />
+
+    <path d="M 32,625 Q 28,658 62,662 L 548,668 Q 600,692 652,668 L 1138,662 Q 1172,658 1168,625 L 1155,642 Q 1152,672 1125,675 L 654,680 Q 600,706 546,680 L 75,675 Q 48,672 45,642 Z" fill="url(#blue-edge-highlight)" stroke="#040a1f" stroke-width="2" />
+
+    <path d="M 66,144 Q 72,126 95,126 L 558,140 Q 600,152 642,140 L 1105,126 Q 1128,126 1134,144 L 1154,618 Q 1156,645 1128,648 L 650,654 Q 600,676 550,654 L 72,648 Q 44,645 46,618 Z" fill="none" stroke="url(#gold-rim-grad)" stroke-width="2.5" opacity="0.85" />
+
+    <path d="M 74,146 L 560,145 Q 600,156 640,145 L 1126,146 L 1144,622 L 648,638 Q 600,658 552,638 L 56,622 Z" fill="url(#red-lining-grad)" stroke="#4a0606" stroke-width="2" />
+
+    <!-- 4 Góc Bọc Vàng -->
+    <g id="gold-corner-tl">
+      <path d="M 52,188 L 56,136 Q 59,110 86,110 L 138,113 L 132,135 L 92,134 Q 78,135 76,148 L 73,190 Z" fill="url(#gold-grad)" stroke="#593100" stroke-width="2" />
+      <path d="M 63,168 L 66,140 Q 68,122 86,122 L 116,124" fill="none" stroke="#fff9c4" stroke-width="2" stroke-linecap="round" />
+      <circle cx="82" cy="130" r="4" fill="#9c5700" />
+    </g>
+
+    <g id="gold-corner-tr" transform="translate(1200, 0) scale(-1, 1)">
+      <path d="M 52,188 L 56,136 Q 59,110 86,110 L 138,113 L 132,135 L 92,134 Q 78,135 76,148 L 73,190 Z" fill="url(#gold-grad)" stroke="#593100" stroke-width="2" />
+      <path d="M 63,168 L 66,140 Q 68,122 86,122 L 116,124" fill="none" stroke="#fff9c4" stroke-width="2" stroke-linecap="round" />
+      <circle cx="82" cy="130" r="4" fill="#9c5700" />
+    </g>
+
+    <g id="gold-corner-bl">
+      <path d="M 35,576 L 30,632 Q 28,664 62,668 L 126,670 L 128,644 L 74,642 Q 56,640 57,622 L 60,578 Z" fill="url(#gold-grad)" stroke="#593100" stroke-width="2" />
+      <path d="M 46,594 L 43,628 Q 42,650 66,652 L 106,654" fill="none" stroke="#fff9c4" stroke-width="2.2" stroke-linecap="round" />
+      <circle cx="66" cy="645" r="4.5" fill="#9c5700" />
+    </g>
+
+    <g id="gold-corner-br" transform="translate(1200, 0) scale(-1, 1)">
+      <path d="M 35,576 L 30,632 Q 28,664 62,668 L 126,670 L 128,644 L 74,642 Q 56,640 57,622 L 60,578 Z" fill="url(#gold-grad)" stroke="#593100" stroke-width="2" />
+      <path d="M 46,594 L 43,628 Q 42,650 66,652 L 106,654" fill="none" stroke="#fff9c4" stroke-width="2.2" stroke-linecap="round" />
+      <circle cx="66" cy="645" r="4.5" fill="#9c5700" />
+    </g>
+  </g>
+
+  <!-- TẦNG 2: KHỐI DÀY CÁC TRANG GIẤY VÀ RUY BĂNG -->
+  <g id="page-block-layer">
+    <path d="M 135,114 L 82,138 L 62,612 L 114,592 Z" fill="url(#page-block-left)" stroke="#8f6838" stroke-width="1.5" />
+    <path d="M 124,119 L 73,607 M 114,124 L 66,610 M 103,129 L 78,460 M 93,133 L 70,540" fill="none" stroke="#9e7442" stroke-width="1.1" opacity="0.65" />
+
+    <path d="M 1065,114 L 1118,138 L 1138,612 L 1086,592 Z" fill="url(#page-block-right)" stroke="#8f6838" stroke-width="1.5" />
+    <path d="M 1076,119 L 1127,607 M 1086,124 L 1134,610 M 1097,129 L 1122,460 M 1107,133 L 1130,540" fill="none" stroke="#9e7442" stroke-width="1.1" opacity="0.65" />
+
+    <path d="M 62,612 L 114,592 C 245,568 465,570 600,624 L 600,652 C 465,606 240,602 62,612 Z" fill="url(#page-block-bottom)" stroke="#7d5628" stroke-width="1.5" />
+    <path d="M 76,609 C 242,580 462,582 600,634 M 92,603 C 245,575 464,577 600,629" fill="none" stroke="#8c6230" stroke-width="1.2" opacity="0.7" />
+
+    <path d="M 1138,612 L 1086,592 C 955,568 735,570 600,624 L 600,652 C 735,606 960,602 1138,612 Z" fill="url(#page-block-bottom)" stroke="#7d5628" stroke-width="1.5" />
+    <path d="M 1124,609 C 958,580 738,582 600,634 M 1108,603 C 955,575 736,577 600,629" fill="none" stroke="#8c6230" stroke-width="1.2" opacity="0.7" />
+
+    <path d="M 556,642 Q 600,618 644,642 L 638,656 Q 600,636 562,656 Z" fill="url(#gold-grad)" stroke="#613600" stroke-width="1.8" />
+    <path d="M 564,646 Q 600,626 636,646" fill="none" stroke="#8f4b00" stroke-width="2" stroke-dasharray="5,4" />
+
+    <path d="M 615,634 C 635,648 652,678 666,722 L 688,708 L 712,716 C 694,676 675,646 646,632 Z" fill="url(#ribbon-grad)" stroke="#4f0303" stroke-width="1.8" />
+  </g>
+
+  <!-- TẦNG 3: HAI TRANG SÁCH MỞ -->
+  <g id="static-open-pages">
+    <path id="left-page" d="M 600,132 C 465,80 245,84 135,114 L 114,592 C 245,568 465,570 600,624 Z" fill="url(#left-page-grad)" stroke="#c29b6b" stroke-width="1.5" />
+
+    <path id="right-page" d="M 600,132 C 735,80 955,84 1065,114 L 1086,592 C 955,568 735,570 600,624 Z" fill="url(#right-page-grad)" stroke="#c29b6b" stroke-width="1.5" />
+
+    <use href="#corner-flourish" transform="translate(148, 126) rotate(4)" />
+    <use href="#corner-flourish" transform="translate(128, 576) scale(1, -1) rotate(4)" />
+    <use href="#corner-flourish" transform="translate(1052, 126) scale(-1, 1) rotate(4)" />
+    <use href="#corner-flourish" transform="translate(1072, 576) scale(-1, -1) rotate(4)" />
+
+    <path d="M 600,132 L 600,624" stroke="#7d572c" stroke-width="2" opacity="0.65" />
+  </g>
+
+  <!-- TẦNG 4: LỚP TRANG LẬT 3D ĐỘNG -->
+  <g id="dynamic-flip-layer" pointer-events="none">
+    <path id="flip-shadow" d="" fill="#2b1804" opacity="0" filter="url(#flip-shadow-blur)" />
+    <path id="flip-page" d="" fill="url(#flip-page-grad)" stroke="#bd9564" stroke-width="1.4" opacity="0" />
+    <path id="flip-highlight" d="" fill="none" stroke="#ffffff" stroke-width="10" opacity="0" filter="url(#flip-shadow-blur)" />
+  </g>
+
+  <!-- TẦNG 5: VÙNG TƯƠNG TÁC NHẤN VÀ KÉO -->
+  <g id="interaction-hit-areas" style="cursor: pointer;">
+    <path id="hit-left" d="M 600,132 C 465,80 245,84 135,114 L 114,592 C 245,568 465,570 600,624 Z" fill="#000000" fill-opacity="0" />
+    <path id="hit-right" d="M 600,132 C 735,80 955,84 1065,114 L 1086,592 C 955,568 735,570 600,624 Z" fill="#000000" fill-opacity="0" />
+  </g>
+
+  <!-- LOGIC LẬT TRANG CHUẨN XML (KHÔNG CHỨA KÝ TỰ ĐẶC BIỆT XML) -->
+  <script>
+    (function() {
+      const svg = document.querySelector('svg');
+      const flipPage = document.getElementById('flip-page');
+      const flipShadow = document.getElementById('flip-shadow');
+      const flipHighlight = document.getElementById('flip-highlight');
+      const hitLeft = document.getElementById('hit-left');
+      const hitRight = document.getElementById('hit-right');
+
+      const SPINE_X = 600;
+      const SPINE_TOP_Y = 132;
+      const SPINE_BOT_Y = 624;
+
+      let isDragging = false;
+      let dragDirection = 1;
+      let dragStartX = 0;
+      let currentProgress = 0;
+      let animFrameId = null;
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function renderFlipAt(t) {
+        if (0.002 >= t || t >= 0.998) {
+          flipPage.setAttribute('opacity', '0');
+          flipShadow.setAttribute('opacity', '0');
+          flipHighlight.setAttribute('opacity', '0');
+          return;
+        }
+
+        const arch = Math.sin(t * Math.PI);
+        const tTop = Math.pow(t, 0.92);
+        const tBot = Math.pow(t, 1.08);
+
+        const outerTopX = lerp(1065, 135, tTop);
+        const outerTopY = 114 - arch * 68;
+
+        const outerBotX = lerp(1086, 114, tBot);
+        const outerBotY = 592 - arch * 54;
+
+        const ctrl1X = lerp(735, 465, t);
+        const ctrl1Y = 80 - arch * 52;
+
+        const ctrl2X = lerp(955, 245, tTop);
+        const ctrl2Y = 84 - arch * 75;
+
+        const ctrlBot1X = lerp(955, 245, tBot);
+        const ctrlBot1Y = 568 - arch * 65;
+
+        const ctrlBot2X = lerp(735, 465, t);
+        const ctrlBot2Y = 570 - arch * 42;
+
+        const outerMidX = (outerTopX + outerBotX) / 2 + (0.5 - t) * arch * 38;
+        const outerMidY = (outerTopY + outerBotY) / 2 - arch * 15;
+
+        const pagePath = [
+          'M', SPINE_X, SPINE_TOP_Y,
+          'C', ctrl1X, ctrl1Y, ctrl2X, ctrl2Y, outerTopX, outerTopY,
+          'Q', outerMidX, outerMidY, outerBotX, outerBotY,
+          'C', ctrlBot1X, ctrlBot1Y, ctrlBot2X, ctrlBot2Y, SPINE_X, SPINE_BOT_Y,
+          'Z'
+        ].join(' ');
+
+        const shadowOffset = (0.5 - t) * 55 * arch;
+        const shadowPath = [
+          'M', SPINE_X, SPINE_TOP_Y + 6,
+          'C', ctrl1X + shadowOffset, ctrl1Y + 25, ctrl2X + shadowOffset, ctrl2Y + 32, outerTopX + shadowOffset, outerTopY + 28,
+          'Q', outerMidX + shadowOffset, outerMidY + 28, outerBotX + shadowOffset, outerBotY + 24,
+          'C', ctrlBot1X + shadowOffset, ctrlBot1Y + 24, ctrlBot2X + shadowOffset, ctrlBot2Y + 18, SPINE_X, SPINE_BOT_Y + 4,
+          'Z'
+        ].join(' ');
+
+        const highlightXTop = lerp(SPINE_X, outerTopX, 0.55);
+        const highlightYTop = lerp(SPINE_TOP_Y, outerTopY, 0.55) - arch * 38;
+        const highlightXBot = lerp(SPINE_X, outerBotX, 0.55);
+        const highlightYBot = lerp(SPINE_BOT_Y, outerBotY, 0.55) - arch * 30;
+        const highlightPath = ['M', highlightXTop, highlightYTop, 'L', highlightXBot, highlightYBot].join(' ');
+
+        const edgeFade = Math.min(1, Math.min(t * 12, (1 - t) * 12));
+
+        flipPage.setAttribute('d', pagePath);
+        flipPage.setAttribute('opacity', edgeFade.toFixed(3));
+        flipPage.setAttribute('fill', 0.5 > t ? 'url(#flip-page-grad)' : 'url(#flip-back-grad)');
+
+        flipShadow.setAttribute('d', shadowPath);
+        flipShadow.setAttribute('opacity', (arch * 0.38 * edgeFade).toFixed(3));
+
+        flipHighlight.setAttribute('d', highlightPath);
+        flipHighlight.setAttribute('opacity', (arch * 0.45 * edgeFade).toFixed(3));
+      }
+
+      function getSvgX(clientX, clientY) {
+        const pt = svg.createSVGPoint();
+        pt.x = clientX;
+        pt.y = clientY;
+        const ctm = svg.getScreenCTM();
+        if (!ctm) return SPINE_X;
+        return pt.matrixTransform(ctm.inverse()).x;
+      }
+
+      function animateFlip(fromT, toT, duration) {
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const raw = Math.min(1, elapsed / duration);
+          const eased = 0.5 > raw
+            ? 4 * raw * raw * raw
+            : 1 - Math.pow(-2 * raw + 2, 3) / 2;
+
+          currentProgress = lerp(fromT, toT, eased);
+          renderFlipAt(currentProgress);
+
+          if (1 > raw) {
+            animFrameId = requestAnimationFrame(step);
+          } else {
+            renderFlipAt(toT);
+            animFrameId = null;
+          }
+        }
+
+        animFrameId = requestAnimationFrame(step);
+      }
+
+      function startInteraction(e, side) {
+        e.preventDefault();
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+        isDragging = true;
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        dragStartX = getSvgX(clientX, clientY);
+
+        if (side === 'right') {
+          dragDirection = 1;
+          currentProgress = 0.02;
+        } else {
+          dragDirection = -1;
+          currentProgress = 0.98;
+        }
+        renderFlipAt(currentProgress);
+      }
+
+      function moveInteraction(e) {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const svgX = getSvgX(clientX, clientY);
+
+        const mappedT = 1 - Math.max(0.01, Math.min(0.99, (svgX - 135) / (1065 - 135)));
+        currentProgress = mappedT;
+        renderFlipAt(currentProgress);
+      }
+
+      function endInteraction(e) {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+        const endX = getSvgX(clientX, clientY);
+        const movedDist = Math.abs(endX - dragStartX);
+
+        if (25 > movedDist) {
+          if (dragDirection === 1) {
+            animateFlip(0.02, 1, 680);
+          } else {
+            animateFlip(0.98, 0, 680);
+          }
+          return;
+        }
+
+        if (dragDirection === 1) {
+          const target = currentProgress > 0.3 ? 1 : 0;
+          const duration = Math.max(220, Math.abs(target - currentProgress) * 600);
+          animateFlip(currentProgress, target, duration);
+        } else {
+          const target = 0.7 > currentProgress ? 0 : 1;
+          const duration = Math.max(220, Math.abs(target - currentProgress) * 600);
+          animateFlip(currentProgress, target, duration);
+        }
+      }
+
+      hitRight.addEventListener('mousedown', function(e) { startInteraction(e, 'right'); });
+      hitLeft.addEventListener('mousedown', function(e) { startInteraction(e, 'left'); });
+      window.addEventListener('mousemove', moveInteraction);
+      window.addEventListener('mouseup', endInteraction);
+
+      hitRight.addEventListener('touchstart', function(e) { startInteraction(e, 'right'); }, { passive: false });
+      hitLeft.addEventListener('touchstart', function(e) { startInteraction(e, 'left'); }, { passive: false });
+      window.addEventListener('touchmove', moveInteraction, { passive: false });
+      window.addEventListener('touchend', endInteraction);
+    })();
+  </script>
+</svg>
