@@ -20,6 +20,7 @@ import room3PoemData from '../../data/room3Poem.json';
 interface Room3LiteratureProps {
   task1Done: boolean;
   task2Done: boolean;
+  autoOpenTask2?: boolean;
   onCompleteTask1: (score: number) => void;
   onCompleteTask2: (score: number) => void;
   onOpenLumiHint?: (hintText: string) => void;
@@ -183,12 +184,14 @@ function shuffleOptions(arr: string[]): string[] {
 export const Room3Literature: React.FC<Room3LiteratureProps> = ({
   task1Done,
   task2Done,
+  autoOpenTask2 = false,
   onCompleteTask1,
   onCompleteTask2,
   onNavigateToRoom4,
 }) => {
   // Dialogue state synchronized with Room 1 & Room 2
   const [dialoguePhase, setDialoguePhase] = useState<'narrator' | 'lumi' | 'lumi_after_task1' | 'explore'>(() => {
+    if (autoOpenTask2) return 'explore';
     if (task1Done && task2Done) return 'explore';
     if (task1Done) return 'lumi_after_task1';
     return 'narrator';
@@ -197,7 +200,9 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
   const isRoomInteractive = dialoguePhase !== 'narrator' && dialoguePhase !== 'lumi';
 
   // Modal controls
-  const [activeModal, setActiveModal] = useState<'task1' | 'task2' | 'task2_locked_notice' | 'secret_key_reward' | null>(null);
+  const [activeModal, setActiveModal] = useState<'task1' | 'task2' | 'task2_locked_notice' | 'secret_key_reward' | null>(() =>
+    autoOpenTask2 ? 'task2' : null
+  );
 
   // Secret Key Reward Modal
   const [rewardPhase, setRewardPhase] = useState<'quill_flips' | 'secret_compartment' | 'floating_key' | 'clue_scroll' | 'collecting'>('quill_flips');
@@ -240,6 +245,7 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
   const [draggedChunkIdx, setDraggedChunkIdx] = useState<number | null>(null);
   const [dragOverChunkIdx, setDragOverChunkIdx] = useState<number | null>(null);
   const [task2Feedback, setTask2Feedback] = useState<string | null>(null);
+  const [task2Checked, setTask2Checked] = useState<boolean>(task2Done);
   const [task2Passed, setTask2Passed] = useState<boolean>(task2Done);
   const [task2Failed, setTask2Failed] = useState<boolean>(false);
   const [isQuillAwakening, setIsQuillAwakening] = useState<boolean>(false);
@@ -255,6 +261,7 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
       setUserAssignments(correctMap);
     }
     if (task2Done) {
+      setTask2Checked(true);
       setTask2Passed(true);
       setOrderedChunks(POEM_CHUNKS);
       setIsQuillAwakening(true);
@@ -278,7 +285,7 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
       return;
     }
     soundManager.playClick();
-    if (!task1Done && !task1Passed) {
+    if (!autoOpenTask2 && !task1Done && !task1Passed) {
       soundManager.playWrong();
       setActiveModal('task2_locked_notice');
       return;
@@ -410,6 +417,7 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
     next[index] = next[targetIndex];
     next[targetIndex] = temp;
     setOrderedChunks(next);
+    setTask2Checked(false);
     setTask2Failed(false);
     setTask2Feedback(null);
   };
@@ -428,35 +436,51 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
     setOrderedChunks(next);
     setDraggedChunkIdx(null);
     setDragOverChunkIdx(null);
+    setTask2Checked(false);
     setTask2Failed(false);
     setTask2Feedback(null);
   };
 
-  // TASK 2: Check Poem Order against ground-truth order 1..N
+  // TASK 2: Check Poem Order against ground-truth order 1..N (strict right/wrong check)
   const handleCheckTask2 = () => {
+    const totalStanzas = POEM_CHUNKS.length;
     const correctCount = orderedChunks.filter((c, idx) => c.id === idx + 1).length;
 
     window.parent.postMessage(
       {
         answerTrue: correctCount, // Cái này là câu trả lời đúng
-        totalQuestion: POEM_CHUNKS.length, // Tổng số khổ thơ
+        totalQuestion: totalStanzas, // Tổng số khổ thơ
         command: 'submit_result', //Không được đổi
       },
       '*'
     );
 
-    soundManager.playCorrect();
-    soundManager.playSparkle();
-    setOrderedChunks(POEM_CHUNKS);
-    setIsQuillAwakening(true);
-    setTask2Passed(true);
-    setTask2Failed(false);
-    setTask2Feedback(null);
+    setTask2Checked(true);
+
+    if (correctCount === totalStanzas) {
+      soundManager.playCorrect();
+      soundManager.playSparkle();
+      setIsQuillAwakening(true);
+      setTask2Passed(true);
+      setTask2Failed(false);
+      setTask2Feedback(
+        `Chính xác tuyệt đối (${correctCount}/${totalStanzas} khổ thơ)! Bút Lông Phép Thuật đã được đánh thức!`
+      );
+    } else {
+      soundManager.playWrong();
+      setIsQuillAwakening(false);
+      setTask2Passed(false);
+      setTask2Failed(true);
+      setTask2Feedback(
+        `Chưa chính xác: Bạn đã xếp đúng ${correctCount}/${totalStanzas} khổ thơ. Các khổ viền xanh (✓ Đúng vị trí) đã chuẩn, hãy điều chỉnh lại các khổ viền đỏ (✕ Chưa đúng vị trí)!`
+      );
+    }
   };
 
   const handleRetryTask2 = () => {
     soundManager.playClick();
     setOrderedChunks(shufflePoemChunks(POEM_CHUNKS));
+    setTask2Checked(false);
     setTask2Failed(false);
     setTask2Feedback(null);
   };
@@ -465,6 +489,7 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
   const handleQuickTestTask2 = () => {
     soundManager.playSparkle();
     setOrderedChunks(POEM_CHUNKS);
+    setTask2Checked(true);
     setIsQuillAwakening(true);
     setTask2Passed(true);
     setTask2Failed(false);
@@ -1202,6 +1227,9 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
                   {orderedChunks.map((chunk, index) => {
                     const isBeingDragged = draggedChunkIdx === index;
                     const isDragTarget = dragOverChunkIdx === index;
+                    const isChunkCorrect = chunk.id === index + 1;
+                    const showCorrectState = task2Passed || (task2Checked && isChunkCorrect);
+                    const showWrongState = !task2Passed && task2Checked && !isChunkCorrect;
 
                     return (
                       <div
@@ -1226,8 +1254,10 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
                           setDragOverChunkIdx(null);
                         }}
                         className={`px-3 py-2.5 rounded-xl border-2 transition-all flex items-center justify-between gap-3 shadow-sm ${
-                          task2Passed || isQuillAwakening
-                            ? 'bg-[#fcf3de] border-emerald-600 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+                          showCorrectState
+                            ? 'bg-emerald-50 border-emerald-600 shadow-[0_0_12px_rgba(16,185,129,0.28)]'
+                            : showWrongState
+                            ? 'bg-rose-50 border-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.2)]'
                             : isDragTarget
                             ? 'bg-[#fff8e6] border-[#d97706] scale-[1.01]'
                             : isBeingDragged
@@ -1240,8 +1270,10 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
                           <GripVertical className="w-4 h-4 text-[#8c622b] hidden sm:block" />
                           <div
                             className={`w-8 h-8 rounded-full font-black text-xs sm:text-sm flex items-center justify-center shadow-sm border ${
-                              task2Passed || isQuillAwakening
+                              showCorrectState
                                 ? 'bg-emerald-700 text-white border-emerald-400'
+                                : showWrongState
+                                ? 'bg-rose-700 text-white border-rose-400'
                                 : 'bg-[#5c3211] text-[#f8ebd0] border-[#b5833e]'
                             }`}
                           >
@@ -1262,6 +1294,18 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
                             </p>
                           ))}
                         </div>
+
+                        {/* Nhãn phản hồi Đúng / Sai rõ ràng sau khi bấm kiểm tra */}
+                        {showCorrectState && (
+                          <span className="px-2.5 py-1 rounded-full bg-emerald-100 border border-emerald-500 text-emerald-800 text-[10px] sm:text-xs font-black shrink-0 whitespace-nowrap">
+                            ✓ Đúng vị trí
+                          </span>
+                        )}
+                        {showWrongState && (
+                          <span className="px-2.5 py-1 rounded-full bg-rose-100 border border-rose-500 text-rose-800 text-[10px] sm:text-xs font-black shrink-0 whitespace-nowrap">
+                            ✕ Sai vị trí
+                          </span>
+                        )}
 
                         {/* Nút đổi vị trí Lên / Xuống */}
                         <div className="flex flex-col gap-1 shrink-0">
@@ -1300,11 +1344,13 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
               </div>
             </div>
 
-            {/* Action Bar (Đã bỏ câu hoàn chỉnh bài thơ theo yêu cầu Hình 1 + Cơ chế 70% Thử lại) */}
-            <div className="mt-2.5 pt-2 border-t border-[#ADEFD1]/30 flex items-center justify-between gap-2 shrink-0 min-h-[42px]">
-              <div className="text-xs font-bold">
+            {/* Action Bar */}
+            <div className="mt-2.5 pt-2 border-t border-[#ADEFD1]/30 flex flex-wrap items-center justify-between gap-2 shrink-0 min-h-[42px]">
+              <div className="text-xs font-bold flex-1 min-w-[200px]">
                 {task2Feedback ? (
-                  <span className="text-rose-300 font-bold">{task2Feedback}</span>
+                  <span className={task2Passed ? 'text-emerald-300 font-bold' : 'text-rose-300 font-bold'}>
+                    {task2Feedback}
+                  </span>
                 ) : null}
               </div>
 
@@ -1322,7 +1368,7 @@ export const Room3Literature: React.FC<Room3LiteratureProps> = ({
                     onClick={handleRetryTask2}
                     className="px-6 py-2 rounded-full bg-rose-700 text-white font-black text-xs hover:bg-rose-600 hover:scale-105 active:scale-95 transition-all shadow-md cursor-pointer uppercase tracking-wider flex items-center gap-1.5"
                   >
-                    <span>THỬ LẠI</span>
+                    <span>XÁO TRỘN LÀM LẠI</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 ) : (
