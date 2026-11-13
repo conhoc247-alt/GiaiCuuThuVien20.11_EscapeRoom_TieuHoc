@@ -37,13 +37,17 @@ const ROOM_NAMES: Record<RoomId, string> = {
 };
 
 export default function App() {
-  const [showStartScreen, setShowStartScreen] = useState(true);
+  const isTestPoemMode =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('test') === 'poem';
+
+  const [showStartScreen, setShowStartScreen] = useState(!isTestPoemMode);
   const [showCutscene, setShowCutscene] = useState(false);
   const [activeTab, setActiveTab] = useState<'explore' | 'practice' | 'quiz' | 'inventory'>('explore');
 
   // Core Game Progress States
-  const [currentRoom, setCurrentRoom] = useState<RoomId>(1);
-  const [unlockedRooms, setUnlockedRooms] = useState<RoomId[]>([1]);
+  const [currentRoom, setCurrentRoom] = useState<RoomId>(isTestPoemMode ? 3 : 1);
+  const [unlockedRooms, setUnlockedRooms] = useState<RoomId[]>(isTestPoemMode ? [1, 2, 3] : [1]);
   const [completedRooms, setCompletedRooms] = useState<RoomId[]>([]);
   const [score, setScore] = useState<number>(0);
   const [taskStates, setTaskStates] = useState<Record<string, TaskState>>({});
@@ -420,6 +424,7 @@ export default function App() {
                   <Room3Literature
                     task1Done={!!taskStates['room3_task1']?.completed}
                     task2Done={!!taskStates['room3_task2']?.completed}
+                    autoOpenTask2={isTestPoemMode}
                     onCompleteTask1={(s) => completeTask('room3_task1', 3, s)}
                     onCompleteTask2={(s) =>
                       completeTask('room3_task2', 3, s, 'I', 3, {
