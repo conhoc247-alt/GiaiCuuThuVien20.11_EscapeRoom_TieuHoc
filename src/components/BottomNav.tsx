@@ -25,8 +25,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
     <nav className="fixed bottom-0 left-0 w-full h-[46px] sm:h-[56px] md:h-[60px] bg-[#00203F] border-t border-[#ADEFD1]/30 flex items-center justify-between z-[100] px-1.5 sm:px-3 md:px-4 shadow-2xl">
       {/* LOGO BÊN TRÁI */}
       <div className="nav-logo">
-        <i className="fa-solid fa-landmark"></i>
-        <span>History Games</span>
+        <i className="fa-solid fa-gamepad"></i>
+        <span>Minigame</span>
       </div>
 
       {/* Nav Tabs Container - 3 main center buttons */}
